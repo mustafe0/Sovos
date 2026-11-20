@@ -1,0 +1,38 @@
+{
+  "entities": {
+    "Project": {
+      "title": "Video Project",
+      "description": "A video project with its captions and settings",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "videoName": { "type": "string" },
+        "videoSize": { "type": "number" },
+        "videoType": { "type": "string" },
+        "captions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "startTime": { "type": "number" },
+              "endTime": { "type": "number" },
+              "text": { "type": "string" }
+            }
+          }
+        },
+        "styleConfig": { "type": "object" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["videoName"]
+    }
+  },
+  "firestore": {
+    "/projects/{projectId}": {
+      "schema": "Project",
+      "description": "Video project documents"
+    }
+  }
+}

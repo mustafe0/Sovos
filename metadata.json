@@ -1,0 +1,8 @@
+{
+  "name": "Cawiye captions ",
+  "description": "Professional Somali Caption Maker and Video Editor ",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

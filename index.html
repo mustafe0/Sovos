@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="so">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <script>
+      (function() {
+        // Intercept Vite client WebSocket connection logs in sandbox/iFrame environment
+        const origError = console.error;
+        console.error = function(...args) {
+          const first = typeof args[0] === 'string' ? args[0] : (args[0] && args[0].message) || '';
+          if (typeof first === 'string' && (first.includes('[vite]') || first.includes('websocket') || first.includes('WebSocket') || first.includes('failed to connect to websocket'))) {
+            return;
+          }
+          return origError.apply(console, args);
+        };
+
+        window.addEventListener('unhandledrejection', function(event) {
+          if (event && event.reason) {
+            const msg = (event.reason.message || String(event.reason)).toLowerCase();
+            const stack = (event.reason.stack || '').toLowerCase();
+            if (msg.includes('websocket') || msg.includes('vite:ws') || msg.includes('ws') || stack.includes('@vite/client')) {
+              event.preventDefault();
+              event.stopImmediatePropagation?.();
+            }
+          }
+        }, true);
+
+        window.addEventListener('error', function(event) {
+          const msg = (event && event.message ? event.message : '').toLowerCase();
+          const file = (event && event.filename ? event.filename : '').toLowerCase();
+          if (file.includes('@vite/client') || msg.includes('websocket') || msg.includes('vite:ws') || msg.includes('[vite]')) {
+            event.preventDefault();
+            event.stopImmediatePropagation?.();
+          }
+        }, true);
+      })();
+    </script>
+    <title>Savos - AI Somali Video Caption & Subtitle Generator</title>
+    <meta name="description" content="Create beautiful, accurate Somali captions with AI transcription, professional styling, and instant HD export." />
+    <meta property="og:title" content="Savos - AI Somali Video Caption & Subtitle Generator" />
+    <meta property="og:description" content="Create beautiful, accurate Somali captions with AI transcription, professional styling, and instant HD export." />
+    <meta name="theme-color" content="#070B14" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Savos" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/pwa-192x192.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500;600;700&family=Lora:ital,wght@0,600;0,700;1,600;1,700&family=Montserrat:ital,wght@0,700;0,800;0,900;1,700;1,800&family=Outfit:wght@500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,600;1,700;1,800;1,900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --sat: env(safe-area-inset-top, 0px);
+        --sab: env(safe-area-inset-bottom, 0px);
+        --sal: env(safe-area-inset-left, 0px);
+        --sar: env(safe-area-inset-right, 0px);
+      }
+      html, body {
+        width: 100%;
+        max-width: 100vw;
+        overflow-x: hidden;
+        overscroll-behavior-y: none;
+        touch-action: pan-y;
+        -webkit-tap-highlight-color: transparent;
+      }
+      body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        background-color: #070B14;
+        color: #F8FAFC;
+        min-height: 100vh;
+        min-height: -webkit-fill-available;
+      }
+      /* Prevent unwanted gesture zooming on mobile buttons and interactive items */
+      button, input, select, textarea, a {
+        touch-action: manipulation;
+      }
+      .font-display {
+        font-family: 'Outfit', sans-serif;
+      }
+      .font-mono-code {
+        font-family: 'JetBrains Mono', monospace;
+      }
+      /* Custom modern scrollbar */
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0B1120;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #1E293B;
+        border-radius: 9999px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #334155;
+      }
+      .range-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 16px;
+        height: 16px;
+        background: #10B981;
+        cursor: pointer;
+        border-radius: 50%;
+        box-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
+        transition: transform 0.15s ease, background-color 0.15s ease;
+      }
+      .range-slider::-webkit-slider-thumb:hover {
+        transform: scale(1.25);
+        background: #34D399;
+      }
+      /* Safe area padding utilities */
+      .pt-safe {
+        padding-top: max(0.75rem, env(safe-area-inset-top));
+      }
+      .pb-safe {
+        padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+      }
+    </style>
+  </head>
+  <body class="bg-[#070B14] text-slate-100 antialiased selection:bg-emerald-500 selection:text-black">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

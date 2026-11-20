@@ -1,0 +1,10 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Authentication has been removed from the client application.
+    // Default closed rules to protect Firestore database.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
