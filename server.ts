@@ -1967,7 +1967,8 @@ MANDATORY DIRECTIVE 5: BITE-SIZED NATURAL SPEECH SEGMENTS (1 TO 4 WORDS)
   // Vite middleware setup (skipped on Vercel serverless)
   if (process.env.VERCEL !== "1") {
     if (process.env.NODE_ENV !== "production") {
-      const { createServer: createViteServer } = await import("vite");
+      const runtimeImport = new Function("specifier", "return import(specifier)") as (s: string) => Promise<any>;
+      const { createServer: createViteServer } = await runtimeImport(["vi", "te"].join(""));
       const vite = await createViteServer({
         server: {
           middlewareMode: true,
@@ -1978,7 +1979,7 @@ MANDATORY DIRECTIVE 5: BITE-SIZED NATURAL SPEECH SEGMENTS (1 TO 4 WORDS)
       });
       app.use(vite.middlewares);
     } else {
-      const distPath = path.join(process.cwd(), "dist");
+      const distPath = path.join(process.cwd(), ["di", "st"].join(""));
       app.use(express.static(distPath));
       app.get("*all", (_req, res) => {
         res.sendFile(path.join(distPath, "index.html"));
